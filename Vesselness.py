@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-filter_type = "Frangi"
+filter_type = "Sato"
 # loads the image using nibabel and get the image data
 # TODO: add way to track the tests and the results
 # TODO : add argparse 
@@ -48,11 +48,10 @@ for contrast in contrasts_list:
     in_filename = MAIN_PATH + os.sep+contrast+'.nii'
     itk_image, np_image = load_image(in_filename)
     #use the Frangi filter
-    filter_type = "Frangi"
     frangi_img = vesselnes_filter(np_image, filter_type )
     #save the filtered image with nibabel keeping the metadata
     out_filename =  MAIN_PATH + os.sep + contrast + filter_type + '.nii'
-    out_image = itk.GetImageFromArray(np.ascontiguousarray(frangi_img)).GetLargestPossibleRegion()
+    out_image = itk.GetImageFromArray(np.ascontiguousarray(frangi_img))
 
     itk.imwrite(out_image, out_filename)
 
