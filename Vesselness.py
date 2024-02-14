@@ -55,6 +55,9 @@ for filter_type in filters_type:
     #save the filtered image with nibabel keeping the metadata
         out_filename =  MAIN_PATH + os.sep + contrast + filter_type + '.nii'
         out_image = itk.GetImageFromArray(np.ascontiguousarray(frangi_img))
+        out_image.SetOrigin(itk_image.GetOrigin())
+        out_image.SetSpacing(itk_image.GetSpacing())
+        out_image.SetDirection(itk_image.GetDirection())
 
         itk.imwrite(out_image, out_filename)
 
