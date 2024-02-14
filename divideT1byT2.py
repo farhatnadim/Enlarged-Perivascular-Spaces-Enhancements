@@ -10,11 +10,22 @@ fixed_image = itk.imread('D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T1w_re
 #load the moving image
 moving_image = itk.imread('D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T2w_reg.nii')
 # convert the images to numpy arrays
+
 fixed_image_np = itk.array_from_image(fixed_image)
 moving_image_np = itk.array_from_image(moving_image)
 # divide the images
 fixed_image_np = fixed_image_np/moving_image_np
-fixed_image = itk.itk.image_view_from_array(fixed_image_np)
+# 0,1,2
+# 0,2,1
+# 1,0,2
+# 1,2,0
+# 2,0,1
+# 2,1,0
+fixed_image = itk.GetImageFromArray(np.ascontiguousarray(fixed_image_np))
+fixed_image.SetOrigin(moving_image.GetOrigin())
+fixed_image.SetSpacing(moving_image.GetSpacing())
+fixed_image.SetDirection(moving_image.GetDirection())
+
 # save the result
 out_filename = 'D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T1w_over_T2w.nii'
 

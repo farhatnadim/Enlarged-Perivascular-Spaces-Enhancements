@@ -51,7 +51,7 @@ for filter_type in filters_type:
         in_filename = MAIN_PATH + os.sep+contrast+'.nii'
         itk_image, np_image = load_image(in_filename)
         #use the Frangi filter
-        frangi_img = vesselnes_filter(np_image, filter_type,False )
+        frangi_img = vesselnes_filter(np_image, filter_type,False)
     #save the filtered image with nibabel keeping the metadata
         out_filename =  MAIN_PATH + os.sep + contrast + filter_type + '.nii'
         out_image = itk.GetImageFromArray(np.ascontiguousarray(frangi_img))
