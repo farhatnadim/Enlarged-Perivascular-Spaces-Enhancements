@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 
 # load the images
 # load the fixed image
-fixed_image = sitk.ReadImage(('D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T1w.nii'),sitk.sitkFloat32)
+MAIN_IMAGE_PATH = r'D:\PhD_Data\SVD\907407\805069\01_Converted'
+fixed_image = sitk.ReadImage(os.path.join(MAIN_IMAGE_PATH,'T2w.nii'),sitk.sitkFloat32)
 #load the moving image
-moving_image = sitk.ReadImage('D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T2w.nii',sitk.sitkFloat32)
+moving_image = sitk.ReadImage(os.path.join(MAIN_IMAGE_PATH,'T1w.nii'),sitk.sitkFloat32)
 # initial transform
 
 initial_transform = sitk.CenteredTransformInitializer(fixed_image, moving_image, sitk.Euler3DTransform(), sitk.CenteredTransformInitializerFilter.GEOMETRY)
@@ -41,4 +42,4 @@ resampler.SetDefaultPixelValue(0)
 resampler.SetTransform(final_transform_v4)
 out = resampler.Execute(moving_image)
 # save the registered image
-sitk.WriteImage(out, 'D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T2w_reg.nii')
+sitk.WriteImage(out, os.path.join(MAIN_IMAGE_PATH,'T1w_reg.nii'))

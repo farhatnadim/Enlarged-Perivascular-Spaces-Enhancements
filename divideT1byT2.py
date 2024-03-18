@@ -6,15 +6,18 @@ import numpy as np
 import os
 # load the images
 # load the fixed image
-fixed_image = itk.imread('D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T1w_resampled.nii')
+MAIN_IMAGE_PATH = r'D:\PhD_Data\SVD\907407\805069\01_Converted'
+fixed_image = itk.imread(os.path.join(MAIN_IMAGE_PATH,'T2w_filtered.nii'))
 #load the moving image
-moving_image = itk.imread('D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T2w_reg.nii')
+moving_image = itk.imread(os.path.join(MAIN_IMAGE_PATH,'T1w_reg.nii'))
 # convert the images to numpy arrays
 
 fixed_image_np = itk.array_from_image(fixed_image)
 moving_image_np = itk.array_from_image(moving_image)
 # divide the images
-fixed_image_np = fixed_image_np/moving_image_np
+#fixed_image_np =moving_image_np/(fixed_image_np)
+fixed_image_np =(fixed_image_np)/moving_image_np
+
 # 0,1,2
 # 0,2,1
 # 1,0,2
@@ -27,7 +30,7 @@ fixed_image.SetSpacing(moving_image.GetSpacing())
 fixed_image.SetDirection(moving_image.GetDirection())
 
 # save the result
-out_filename = 'D:\PhD_Data\MSBRAIN\Test_Software\EPC\Processed\T1w_over_T2w.nii'
+out_filename = os.path.join(MAIN_IMAGE_PATH,'T2w_over_T1w.nii')
 
 #save the result with the metadata
 itk.imwrite(fixed_image, out_filename)
